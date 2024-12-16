@@ -31,6 +31,43 @@ export const AI = createAI({
           );
         },
         tools: {
+          getSupport: {
+            description: "Redirect user to support page",
+            parameters: z.object({
+              reason: z
+                .string()
+                .optional()
+                .describe("Optional reason for seeking support"),
+            }),
+            generate: async function* ({ reason }) {
+              // Redirect to support page
+              return (
+                <div>
+                  <p>
+                    We're redirecting you to our support page
+                    {reason ? ` for ${reason}` : ""}.
+                  </p>
+                  <script
+                    dangerouslySetInnerHTML={{
+                      __html: `window.location.href = '/support';`,
+                    }}
+                  />
+                </div>
+              );
+            },
+          },
+          getCourses: {
+            description: "Get courses by a prompt",
+            parameters: z.object({
+              prompt: z.string().describe("The prompt to get courses by"),
+            }),
+            generate: async function* ({ prompt }) {
+              yield "Starting...";
+              yield "Prompt .. " + prompt;
+
+              return <h1>To be implemented {prompt}</h1>;
+            },
+          },
           getMovies: {
             description: "Get movies by a prompt",
             parameters: z.object({

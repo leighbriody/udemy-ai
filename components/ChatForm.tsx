@@ -18,6 +18,7 @@ export function ChatForm() {
         ]);
 
         const message = await continueConversation(input);
+        setInput("");
 
         setConversation((currentConversation: any[]) => [
           ...currentConversation,
